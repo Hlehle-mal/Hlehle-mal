@@ -1,0 +1,537 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled7.ipynb",
+      "provenance": [],
+      "collapsed_sections": [],
+      "authorship_tag": "ABX9TyNLg4qgDqf1n/mBjTW9EOnt",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Hlehle-mal/Hlehle-mal/blob/main/Country%20GDP%20analysis\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 7,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "NSikYSAtp3AH",
+        "outputId": "c371add3-6734-4250-b53d-0e979f8b4989"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.7/dist-packages/ipykernel_launcher.py:3: ConversionWarning: Some errors were detected !\n",
+            "    Line #5 (got 1 columns instead of 63)\n",
+            "  This is separate from the ipykernel package so we can avoid doing imports until\n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "from numpy import genfromtxt\n",
+        "data = genfromtxt(\"CountrieswithGDP.txt\", delimiter=',', skip_header = 1, invalid_raise = False)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#data"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bBm-tN0Av_bY",
+        "outputId": "cb92ba95-018d-470d-a142-47f3f7e568fc"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[          nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan,           nan,\n",
+              "                  nan,           nan,           nan],\n",
+              "       [ 2255.225482 ,   629.9553062, 11601.63022  , 25306.82494  ,\n",
+              "        27266.40335  , 19466.99052  ,   588.3691778,  2890.345675 ,\n",
+              "        24733.62696  ,  1445.760002 ,  4803.398244 ,  2618.876037 ,\n",
+              "          590.4521124,   665.7982328,  7122.938458 ,  2639.54156  ,\n",
+              "         3362.4656   , 15378.16704  , 30860.12808  ,  2579.115607 ,\n",
+              "         6525.541272 ,   229.6769525,  2242.689259 , 27570.4852   ,\n",
+              "        23016.84778  ,  1334.646773 ,   402.6953275,  6047.200797 ,\n",
+              "          394.1156638,   385.5793827,  1414.072488 ,  5745.981529 ,\n",
+              "          837.7464011,  1206.991065 , 27715.52837  , 18937.24998  ,\n",
+              "        39578.07441  ,   478.2194906, 16684.21278  ,   279.2204061,\n",
+              "         5345.213415 ,  6288.25324  ,  1908.304416 ,   274.8728621,\n",
+              "        14646.42094  , 40034.85063  ,   672.1547506,  3359.517402 ,\n",
+              "        36152.66676  ,  3054.727742 , 33529.83052  ,  3825.093781 ,\n",
+              "        15428.32098  , 33630.24604  , 39170.41371  ,  2699.123242 ,\n",
+              "        21058.43643  , 28272.40661  , 37691.02733  ,  9581.05659  ,\n",
+              "         5671.912202 ,   757.4009286,   347.7456605]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "countries = np.array(['Algeria','Angola','Argentina',\t'Australia',\t'Austria',\t'Bahamas',\t'Bangladesh',\t'Belarus','Belgium',\t'Bhutan',\t'Brazil',\t'Bulgaria',\t'Cambodia',\t'Cameroon',\t'Chile',\t'China',\t'Colombia',\t'Cyprus',\t'Denmark',\t'El Salvador',\t'Estonia',\t'Ethiopia',\t'Fiji',\t'Finland',\t'France',\t'Georgia',\t'Ghana',\t'Grenada',\t'Guinea',\t'Haiti',\t'Honduras',\t'Hungary',\t'India',\t'Indonesia',\t'Ireland',\t'Italy',\t'Japan',\t'Kenya',\t'South Korea',\t'Liberia',\t'Malaysia',\t'Mexico',\t'Morocco',\t'Nepal',\t'New Zealand',\t'Norway',\t'Pakistan',\t'Peru',\t'Qatar',\t'Russia',\t'Singapore',\t'South Africa',\t'Spain',\t'Sweden',\t'Switzerland',\t'Thailand',\t'United Arab Emirates',\t'United Kingdom',\t'United States',\t'Uruguay',\t'Venezuela',\t'Vietnam','Zimbabwe'])\n",
+        "GDP = np.array([2255.225482 ,   629.9553062, 11601.63022  , 25306.82494  ,\n",
+        "        27266.40335  , 19466.99052  ,   588.3691778,  2890.345675 ,\n",
+        "        24733.62696  ,  1445.760002 ,  4803.398244 ,  2618.876037 ,\n",
+        "          590.4521124,   665.7982328,  7122.938458 ,  2639.54156  ,\n",
+        "         3362.4656   , 15378.16704  , 30860.12808  ,  2579.115607 ,\n",
+        "         6525.541272 ,   229.6769525,  2242.689259 , 27570.4852   ,\n",
+        "        23016.84778  ,  1334.646773 ,   402.6953275,  6047.200797 ,\n",
+        "          394.1156638,   385.5793827,  1414.072488 ,  5745.981529 ,\n",
+        "          837.7464011,  1206.991065 , 27715.52837  , 18937.24998  ,\n",
+        "        39578.07441  ,   478.2194906, 16684.21278  ,   279.2204061,\n",
+        "         5345.213415 ,  6288.25324  ,  1908.304416 ,   274.8728621,\n",
+        "        14646.42094  , 40034.85063  ,   672.1547506,  3359.517402 ,\n",
+        "        36152.66676  ,  3054.727742 , 33529.83052  ,  3825.093781 ,\n",
+        "        15428.32098  , 33630.24604  , 39170.41371  ,  2699.123242 ,\n",
+        "        21058.43643  , 28272.40661  , 37691.02733  ,  9581.05659  ,\n",
+        "         5671.912202 ,   757.4009286,   347.7456605])\n",
+        "countries_with_GDP = np.vstack((countries,GDP))\n",
+        "countries_with_GDP"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "nKI4JV63x7Bq",
+        "outputId": "9ed111d7-8434-43d5-d261-13ad272b8c9e"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([['Algeria', 'Angola', 'Argentina', 'Australia', 'Austria',\n",
+              "        'Bahamas', 'Bangladesh', 'Belarus', 'Belgium', 'Bhutan',\n",
+              "        'Brazil', 'Bulgaria', 'Cambodia', 'Cameroon', 'Chile', 'China',\n",
+              "        'Colombia', 'Cyprus', 'Denmark', 'El Salvador', 'Estonia',\n",
+              "        'Ethiopia', 'Fiji', 'Finland', 'France', 'Georgia', 'Ghana',\n",
+              "        'Grenada', 'Guinea', 'Haiti', 'Honduras', 'Hungary', 'India',\n",
+              "        'Indonesia', 'Ireland', 'Italy', 'Japan', 'Kenya', 'South Korea',\n",
+              "        'Liberia', 'Malaysia', 'Mexico', 'Morocco', 'Nepal',\n",
+              "        'New Zealand', 'Norway', 'Pakistan', 'Peru', 'Qatar', 'Russia',\n",
+              "        'Singapore', 'South Africa', 'Spain', 'Sweden', 'Switzerland',\n",
+              "        'Thailand', 'United Arab Emirates', 'United Kingdom',\n",
+              "        'United States', 'Uruguay', 'Venezuela', 'Vietnam', 'Zimbabwe'],\n",
+              "       ['2255.225482', '629.9553062', '11601.63022', '25306.82494',\n",
+              "        '27266.40335', '19466.99052', '588.3691778', '2890.345675',\n",
+              "        '24733.62696', '1445.760002', '4803.398244', '2618.876037',\n",
+              "        '590.4521124', '665.7982328', '7122.938458', '2639.54156',\n",
+              "        '3362.4656', '15378.16704', '30860.12808', '2579.115607',\n",
+              "        '6525.541272', '229.6769525', '2242.689259', '27570.4852',\n",
+              "        '23016.84778', '1334.646773', '402.6953275', '6047.200797',\n",
+              "        '394.1156638', '385.5793827', '1414.072488', '5745.981529',\n",
+              "        '837.7464011', '1206.991065', '27715.52837', '18937.24998',\n",
+              "        '39578.07441', '478.2194906', '16684.21278', '279.2204061',\n",
+              "        '5345.213415', '6288.25324', '1908.304416', '274.8728621',\n",
+              "        '14646.42094', '40034.85063', '672.1547506', '3359.517402',\n",
+              "        '36152.66676', '3054.727742', '33529.83052', '3825.093781',\n",
+              "        '15428.32098', '33630.24604', '39170.41371', '2699.123242',\n",
+              "        '21058.43643', '28272.40661', '37691.02733', '9581.05659',\n",
+              "        '5671.912202', '757.4009286', '347.7456605']], dtype='<U32')"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 9
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "countries_with_GDP.shape"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LPqpDadXA3JU",
+        "outputId": "eb3c67b5-313d-4581-8b39-ce40c4379ab0"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(2, 63)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 10
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#country with max GDP\n",
+        "max_GDP = GDP.argmax()"
+      ],
+      "metadata": {
+        "id": "0X_jXVCG5uxg"
+      },
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "country_max_GDP = countries[max_GDP]\n",
+        "country_max_GDP"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 36
+        },
+        "id": "gSum9LHkPBF8",
+        "outputId": "6fbfe250-831c-4db5-b74b-1c1cb413f26c"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Norway'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 13
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "lowest_GDP = GDP.argmin()\n",
+        "country_lowest_GDP = countries[lowest_GDP]\n",
+        "country_lowest_GDP"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 36
+        },
+        "id": "EDjyWG4zPA_9",
+        "outputId": "4b948ca8-b687-4d1b-b1c7-6f70bc7262a3"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Ethiopia'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 16
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "for country in countries:\n",
+        "  print(\"ecaluatin country {}\".format(country))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bU2CutwIPA7B",
+        "outputId": "bad31531-5021-4b5d-c874-2455fa70405f"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "ecaluatin country Algeria\n",
+            "ecaluatin country Angola\n",
+            "ecaluatin country Argentina\n",
+            "ecaluatin country Australia\n",
+            "ecaluatin country Austria\n",
+            "ecaluatin country Bahamas\n",
+            "ecaluatin country Bangladesh\n",
+            "ecaluatin country Belarus\n",
+            "ecaluatin country Belgium\n",
+            "ecaluatin country Bhutan\n",
+            "ecaluatin country Brazil\n",
+            "ecaluatin country Bulgaria\n",
+            "ecaluatin country Cambodia\n",
+            "ecaluatin country Cameroon\n",
+            "ecaluatin country Chile\n",
+            "ecaluatin country China\n",
+            "ecaluatin country Colombia\n",
+            "ecaluatin country Cyprus\n",
+            "ecaluatin country Denmark\n",
+            "ecaluatin country El Salvador\n",
+            "ecaluatin country Estonia\n",
+            "ecaluatin country Ethiopia\n",
+            "ecaluatin country Fiji\n",
+            "ecaluatin country Finland\n",
+            "ecaluatin country France\n",
+            "ecaluatin country Georgia\n",
+            "ecaluatin country Ghana\n",
+            "ecaluatin country Grenada\n",
+            "ecaluatin country Guinea\n",
+            "ecaluatin country Haiti\n",
+            "ecaluatin country Honduras\n",
+            "ecaluatin country Hungary\n",
+            "ecaluatin country India\n",
+            "ecaluatin country Indonesia\n",
+            "ecaluatin country Ireland\n",
+            "ecaluatin country Italy\n",
+            "ecaluatin country Japan\n",
+            "ecaluatin country Kenya\n",
+            "ecaluatin country South Korea\n",
+            "ecaluatin country Liberia\n",
+            "ecaluatin country Malaysia\n",
+            "ecaluatin country Mexico\n",
+            "ecaluatin country Morocco\n",
+            "ecaluatin country Nepal\n",
+            "ecaluatin country New Zealand\n",
+            "ecaluatin country Norway\n",
+            "ecaluatin country Pakistan\n",
+            "ecaluatin country Peru\n",
+            "ecaluatin country Qatar\n",
+            "ecaluatin country Russia\n",
+            "ecaluatin country Singapore\n",
+            "ecaluatin country South Africa\n",
+            "ecaluatin country Spain\n",
+            "ecaluatin country Sweden\n",
+            "ecaluatin country Switzerland\n",
+            "ecaluatin country Thailand\n",
+            "ecaluatin country United Arab Emirates\n",
+            "ecaluatin country United Kingdom\n",
+            "ecaluatin country United States\n",
+            "ecaluatin country Uruguay\n",
+            "ecaluatin country Venezuela\n",
+            "ecaluatin country Vietnam\n",
+            "ecaluatin country Zimbabwe\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "for i in range(len(countries)):\n",
+        "  country = countries[i]\n",
+        "  country_GDP = GDP[i]\n",
+        "  print(\" country {} per capita gdp is {}\".format(country, country_GDP))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "NcZH_XlUQcuC",
+        "outputId": "b318fa25-3c10-4d69-e624-09a855c859c9"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " country Algeria per capita gdp is 2255.225482\n",
+            " country Angola per capita gdp is 629.9553062\n",
+            " country Argentina per capita gdp is 11601.63022\n",
+            " country Australia per capita gdp is 25306.82494\n",
+            " country Austria per capita gdp is 27266.40335\n",
+            " country Bahamas per capita gdp is 19466.99052\n",
+            " country Bangladesh per capita gdp is 588.3691778\n",
+            " country Belarus per capita gdp is 2890.345675\n",
+            " country Belgium per capita gdp is 24733.62696\n",
+            " country Bhutan per capita gdp is 1445.760002\n",
+            " country Brazil per capita gdp is 4803.398244\n",
+            " country Bulgaria per capita gdp is 2618.876037\n",
+            " country Cambodia per capita gdp is 590.4521124\n",
+            " country Cameroon per capita gdp is 665.7982328\n",
+            " country Chile per capita gdp is 7122.938458\n",
+            " country China per capita gdp is 2639.54156\n",
+            " country Colombia per capita gdp is 3362.4656\n",
+            " country Cyprus per capita gdp is 15378.16704\n",
+            " country Denmark per capita gdp is 30860.12808\n",
+            " country El Salvador per capita gdp is 2579.115607\n",
+            " country Estonia per capita gdp is 6525.541272\n",
+            " country Ethiopia per capita gdp is 229.6769525\n",
+            " country Fiji per capita gdp is 2242.689259\n",
+            " country Finland per capita gdp is 27570.4852\n",
+            " country France per capita gdp is 23016.84778\n",
+            " country Georgia per capita gdp is 1334.646773\n",
+            " country Ghana per capita gdp is 402.6953275\n",
+            " country Grenada per capita gdp is 6047.200797\n",
+            " country Guinea per capita gdp is 394.1156638\n",
+            " country Haiti per capita gdp is 385.5793827\n",
+            " country Honduras per capita gdp is 1414.072488\n",
+            " country Hungary per capita gdp is 5745.981529\n",
+            " country India per capita gdp is 837.7464011\n",
+            " country Indonesia per capita gdp is 1206.991065\n",
+            " country Ireland per capita gdp is 27715.52837\n",
+            " country Italy per capita gdp is 18937.24998\n",
+            " country Japan per capita gdp is 39578.07441\n",
+            " country Kenya per capita gdp is 478.2194906\n",
+            " country South Korea per capita gdp is 16684.21278\n",
+            " country Liberia per capita gdp is 279.2204061\n",
+            " country Malaysia per capita gdp is 5345.213415\n",
+            " country Mexico per capita gdp is 6288.25324\n",
+            " country Morocco per capita gdp is 1908.304416\n",
+            " country Nepal per capita gdp is 274.8728621\n",
+            " country New Zealand per capita gdp is 14646.42094\n",
+            " country Norway per capita gdp is 40034.85063\n",
+            " country Pakistan per capita gdp is 672.1547506\n",
+            " country Peru per capita gdp is 3359.517402\n",
+            " country Qatar per capita gdp is 36152.66676\n",
+            " country Russia per capita gdp is 3054.727742\n",
+            " country Singapore per capita gdp is 33529.83052\n",
+            " country South Africa per capita gdp is 3825.093781\n",
+            " country Spain per capita gdp is 15428.32098\n",
+            " country Sweden per capita gdp is 33630.24604\n",
+            " country Switzerland per capita gdp is 39170.41371\n",
+            " country Thailand per capita gdp is 2699.123242\n",
+            " country United Arab Emirates per capita gdp is 21058.43643\n",
+            " country United Kingdom per capita gdp is 28272.40661\n",
+            " country United States per capita gdp is 37691.02733\n",
+            " country Uruguay per capita gdp is 9581.05659\n",
+            " country Venezuela per capita gdp is 5671.912202\n",
+            " country Vietnam per capita gdp is 757.4009286\n",
+            " country Zimbabwe per capita gdp is 347.7456605\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(GDP.max())\n",
+        "print(GDP.min())\n",
+        "print(GDP.mean())\n",
+        "print(GDP.std())\n",
+        "print(GDP.sum())\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "01NzXnqSQcql",
+        "outputId": "5026cf77-cc5f-4e01-9070-3429041b17d1"
+      },
+      "execution_count": 21,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "40034.85063\n",
+            "229.6769525\n",
+            "11289.409271639683\n",
+            "12743.828910617945\n",
+            "711232.7841133\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "n_hfAVePQcnw"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "yHkXKv_eQckn"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "_vDmCv9nQcdR"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "3pgS5DHgPAyI"
+      },
+      "execution_count": 12,
+      "outputs": []
+    }
+  ]
+}
